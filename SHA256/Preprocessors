@@ -1,0 +1,6 @@
+module preprocessor (
+    input [95:0] message,
+    output [511:0] Block
+);
+assign Block={message,1'b1,{351{1'b0}},{57{1'b0}},7'b1100000};
+endmodule
