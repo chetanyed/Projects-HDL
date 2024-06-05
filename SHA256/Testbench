@@ -1,0 +1,23 @@
+module sha_tb;
+
+reg clk,load;
+reg [95:0] message;
+wire [255:0] hash;
+wire dn;
+
+sha_ing sha (message,clk,load,hash,dn);
+
+always #5 clk=~clk;
+
+initial begin
+    $dumpfile("sha.vcd");
+    $dumpvars(0,sha_tb);
+    clk=1'b0;
+    load=1'b0;
+    message=96'b010100100110010101100100010000100110110001101111011000110110101101000010011011000111010101100101;
+    load=1'b1;
+    #2;
+    load=1'b0;
+    #700;
+    $finish;
+end
