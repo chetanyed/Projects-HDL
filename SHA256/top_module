@@ -1,0 +1,14 @@
+module hasher (
+    input [95:0] message,
+    input clk,load,
+    output [255:0] hash,
+    output dn
+);
+
+wire [511:0] Block;
+wire [31:0] Word;
+preprocessor prep(message,Block);
+Block_byte B_byte(Block,clk,load,Word);
+sha_hasher engine(clk,load,Word,hash,dn);
+    
+endmodule
