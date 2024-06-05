@@ -1,0 +1,43 @@
+module Block_byte(
+    input [511:0] Block,
+    input clk,load,
+    output [31:0] Word
+);
+reg [31:0] w_init[0:15];
+reg [5:0] itr=5'b11111;
+reg [31:0] word_r;
+
+always @(posedge load) begin
+w_init[15] = Block[511 : 480];
+w_init[14] = Block[479 : 448];
+w_init[13] = Block[447 : 416];
+w_init[12]= Block[415 : 384];
+w_init[11] = Block[383 : 352];
+w_init[10] = Block[351 : 320];
+w_init[9] = Block[319 : 288];
+w_init[8] = Block[287 : 256];
+w_init[7] = Block[255 : 224];
+w_init[6] = Block[223 : 192];
+w_init[5] = Block[191 : 160];
+w_init[4]= Block[159 : 128];
+w_init[3] = Block[127 :  96];
+w_init[2] = Block[95  :  64];
+w_init[1] = Block[63  :  32];
+w_init[0] = Block[31  :   0];
+end
+always @(negedge clk ) begin
+    if(itr==31)begin
+        itr<=0;
+    end
+    
+    if(itr<16)begin
+        word_r=w_init[15-itr];
+        itr=itr+1;
+        end
+    else if(itr==16)begin
+        word_r=32'hzzzzzzzz;
+
+end
+end
+assign Word=word_r;
+endmodule
