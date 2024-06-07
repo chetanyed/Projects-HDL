@@ -22,7 +22,44 @@ begin
 end
     
 endmodule
-  
+
+/*
+module b2g_convert #(
+    parameter PTR_WIDTH=3
+) (
+    input [PTR_WIDTH-1:0] binary_ptr,
+
+    output reg [PTR_WIDTH-1:0] gray_ptr
+    
+);
+
+always@(*)
+begin
+    gray_ptr<=binary_ptr^(binary_ptr>>1);
+end
+    
+endmodule
+
+module g2b_convert #(
+    parameter PTR_WIDTH=3
+) (
+    input [PTR_WIDTH-1:0] gray_input,
+    output reg [PTR_WIDTH-1:0] binary_output
+);
+integer i;
+
+always@(*)begin
+    binary_output[PTR_WIDTH-1]<=gray_input[PTR_WIDTH-1];
+    for (i =1;i<PTR_WIDTH ;i=i+1 ) begin
+        binary_output[i]<=binary_output[i-1]^(gray_input[i]);
+        
+    end
+end
+
+    
+endmodule
+*/
+
 module wptr_handler #(
     parameter WIDTH=3
 ) (
@@ -135,8 +172,8 @@ module asynchronous_fifo #(parameter DEPTH=8, DATA_WIDTH=8,PTR_WIDTH=3) (
   input rclk, rrst_n,
   input w_en, r_en,
   input [DATA_WIDTH-1:0] data_in,
-  output reg [DATA_WIDTH-1:0] data_out,
-  output reg full, empty
+  output [DATA_WIDTH-1:0] data_out,
+  output full, empty
 );
   
   
@@ -144,37 +181,14 @@ module asynchronous_fifo #(parameter DEPTH=8, DATA_WIDTH=8,PTR_WIDTH=3) (
   wire [PTR_WIDTH:0] g_wptr_sync, g_rptr_sync;
   wire [PTR_WIDTH:0] b_wptr, b_rptr;
   wire [PTR_WIDTH:0] g_wptr, g_rptr;
-  wire [DATA_WIDTH-1:0]w_dataout;
-  wire w_full,w_empty;
+  
 
   tfsync #(PTR_WIDTH) sync_wptr (g_wptr,wclk,wrst_n, g_wptr_sync); //write pointer to read clock domain
   tfsync #(PTR_WIDTH) sync_rptr (g_rptr,rclk,rrst_n, g_rptr_sync); //read pointer to write clock domain 
   
-  wptr_handler #(PTR_WIDTH) wptr_h(wclk, wrst_n, w_en,g_rptr_sync,b_wptr,g_wptr,w_full);
-  rptr_handler #(PTR_WIDTH) rptr_h(rclk, rrst_n, r_en,g_wptr_sync,b_rptr,g_rptr,w_empty);
-  fifo #(DEPTH,DATA_WIDTH,PTR_WIDTH)fifom(wclk, w_en, rclk, r_en,b_wptr, b_rptr, data_in,w_full,w_empty,w_dataout);
-always @(posedge wclk) begin
-    if(!wrst_n) begin
-        full<=0;
-    end
-    else begin
-        full<=w_full;
-    end
-    
-end
-always @(posedge r_en or r_en==1) begin
-    data_out<=w_dataout;
-    
-end
-always @(posedge rclk) begin
-    if(!rrst_n)begin
-        empty<=1;
-        
-    end
-    else empty<=w_empty;
-        
-    
-end
+  wptr_handler #(PTR_WIDTH) wptr_h(wclk, wrst_n, w_en,g_rptr_sync,b_wptr,g_wptr,full);
+  rptr_handler #(PTR_WIDTH) rptr_h(rclk, rrst_n, r_en,g_wptr_sync,b_rptr,g_rptr,empty);
+  fifo #(DEPTH,DATA_WIDTH,PTR_WIDTH)fifom(wclk, w_en, rclk, r_en,b_wptr, b_rptr, data_in,full,empty,data_out);
 
 endmodule
 
