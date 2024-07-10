@@ -11,6 +11,7 @@ Welcome to my Verilog HDL projects repository! This repository contains various 
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [License](#License)
 - [Contact](#contact)
 
 ## Introduction
@@ -57,6 +58,9 @@ gtkwave <vcd_file>.vcd
 ## Contributing
 
 Contributions are welcome! If you have any improvements or new projects to add, please fork the repository, make your changes, and submit a pull request.
+
+## License
+This repository is licensed under the MIT License. See the LICENSE file for more information.
 
 ## Contact
 
