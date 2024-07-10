@@ -48,7 +48,7 @@ Navigate to the project directory and follow the instructions
 
 Each project comes with its own testbench and can be simulated with Icarus Verilog and Gtkwave
 
-Here are the cmd prompts:
+Here are the cmd line prompts:
 ```bash
 iverilog -o <file_name>.vvp <testbench_file>.v
 vvp <file_name>.vvp
