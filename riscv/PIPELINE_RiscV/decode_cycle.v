@@ -151,7 +151,7 @@ module Register_File(clk,rst,WE3,WD3,A1,A2,A3,RD1,RD2);
         Register[0] = 32'h00000000;
     end
 
-    assign reg5=Register[5];
+    
 
 endmodule
 
