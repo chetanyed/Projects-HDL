@@ -42,7 +42,7 @@ To get started with any of these projects, clone the repository to your local ma
 git clone https://github.com/chetanyed/Projects-HDL.git
 ```
 
-Navigate to the project directory and follow the instructions provided in each project's README file.
+Navigate to the project directory and follow the instructions 
 
 ## Usage
 
