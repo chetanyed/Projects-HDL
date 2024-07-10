@@ -50,7 +50,7 @@ Each project comes with its own testbench and can be simulated with Icarus Veril
 
 Here are the cmd prompts:
 ```bash
-iverilog -o <file_name>.vvp <testbench_file>
+iverilog -o <file_name>.vvp <testbench_file>.v
 vvp <file_name>.vvp
 gtkwave <vcd_file>.vcd
 ```
