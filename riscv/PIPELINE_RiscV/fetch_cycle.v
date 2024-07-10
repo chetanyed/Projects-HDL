@@ -50,7 +50,7 @@ endmodule
 
 
 module instr_mem #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 32, MEM_SIZE = 1024) (
-    input rst,
+    input rst,Flush,
     input       [ADDR_WIDTH-1:0] instr_addr,
     output      [DATA_WIDTH-1:0] instr
 
@@ -65,7 +65,7 @@ end
 
 // word-aligned memory access
 // combinational read logic
-assign instr = (rst==1'b0)?{32{1'b0}}:instr_ram[instr_addr[ADDR_WIDTH-1:2]];
+assign instr = (rst==1'b0||Flush==1'b0)?{32{1'b0}}:instr_ram[instr_addr];
 
 endmodule
 
@@ -74,6 +74,7 @@ module fetch_mod (
     input rst,
     input PCsrcE,
     input [31:0] PCtargetE,
+    input Flush,
     output [31:0] instrD,//instruction coming out of the fetch cycle
     output [31:0] PCD,//program counter coming out of fetch cycle
     output [31:0] PCplus4D //next instrucction address
@@ -86,11 +87,11 @@ reg [31:0] instrf_reg;
 
 mux2 #(32) PCmux(PCplus4f,PCtargetE,PCsrcE,PCF);
 reset_ff #(32) pcflop(clk,rst,PCF,PCF_flop);
-instr_mem instrucn_memory(rst,PCF_flop,instrF);
-adder pcadd4 (PCF_flop,32'h00000004,PCplus4f);
+instr_mem instrucn_memory(rst,Flush,PCF_flop,instrF);
+adder pcadd4 (PCF_flop,32'h00000001,PCplus4f);
 
 always @(posedge clk or negedge rst) begin
-    if (rst==1'b0 || Flush==1'b1) begin
+    if (rst==1'b0 || Flush==1'b0) begin
         PCf_reg<=32'h00000000;
         PCplus4_reg<=32'h00000000;
         instrf_reg<=32'h00000000;
@@ -109,4 +110,3 @@ assign PCD=PCf_reg;
 assign PCplus4D=PCplus4_reg;
 
 endmodule
-
