@@ -1,5 +1,3 @@
-Sure! Here's an updated README for your GitHub repository:
-
 ---
 
 # Verilog HDL Projects
