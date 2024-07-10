@@ -11,7 +11,6 @@ Welcome to my Verilog HDL projects repository! This repository contains various 
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Introduction
