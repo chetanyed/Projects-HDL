@@ -4,19 +4,21 @@
 `include "memory_cycle.v"
 `include "write_back.v"
 `include "hazard_unit.v"
+`include "branch_detection.v"
 module pipeline_cpu (
     input clk,rst
 );
 wire PCsrcE;
-wire [31:0]PCtargetE,instrD,PCD,PCplus4D,PCplus4E,PCplus4M,PCplus4W,ResultW,PCE,ALUresultM,ALUresultW,WriteDataM,ReadDataW,RD1E,RD2E,ImmextE;
-wire RegwriteM,RegwriteW,RegwriteE,ALUsrcE,MemwriteE,MemwriteM,BranchE,ResultsrcE,ResultsrcM,ResultsrcW;
+wire [31:0]PCtargetE,PCtargetE2,stalled_PC,instrD,PCD,PCplus4D,PCplus4E,PCplus4M,PCplus4W,ResultW,PCE,ALUresultM,ALUresultW,WriteDataM,ReadDataW,RD1E,RD2E,ImmextE;
+wire RegwriteM,RegwriteW,RegwriteE,ALUsrcE,MemwriteE,MemwriteM,BranchE,ResultsrcE,ResultsrcM,ResultsrcW,stalled_PCsrcE,branch_sel,Flush,PCsrcE2;
 wire [4:0] RDW,RDE,RDM,RS1E,RS2E;
 wire [2:0] ALUcontrolE;
 wire [1:0] ForwardAE,ForwardBE;
 fetch_mod fetch(.clk(clk),
                 .rst(rst),
-                .PCsrcE(PCsrcE),
-                .PCtargetE(PCtargetE),
+                .PCsrcE(PCsrcE2),
+                .PCtargetE(PCtargetE2),
+                .Flush(Flush),
                 .instrD(instrD),
                 .PCD(PCD),
                 .PCplus4D(PCplus4D)
@@ -111,6 +113,24 @@ Hazard_unit Hazard(.RS1E(RS1E),
                    .ForwardBE(ForwardBE)
                    );
 
+Branch_Handling Branch(.clk(clk),
+                       .rst(rst),
+                       .PCsrcE(PCsrcE),
+                       .PCtargetE(PCtargetE),
+                       .stalled_PC(stalled_PC),
+                       .stalled_PCsrcE(stalled_PCsrcE),
+                       .sel(branch_sel),
+                       .Flush(Flush));
+
+mux2 #(1) Branch_Mux(.d0(PCsrcE),
+                .d1(stalled_PCsrcE),
+                .sel(branch_sel),
+                .y(PCsrcE2));
+
+mux2 #(32) Branch_MuxPC(.d0(PCtargetE),
+                .d1(stalled_PC),
+                .sel(branch_sel),
+                .y(PCtargetE2));
 
 
 
