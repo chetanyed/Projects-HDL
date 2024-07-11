@@ -67,7 +67,8 @@ This repository is licensed under the MIT License. See the LICENSE file for more
 If you have any questions or suggestions, feel free to reach out to me.
 
 - **Name:** Chetanya Mishra
-- **Email:** chetanyamishraa@example.com
+- **Email:** chetanyamishraa@gmail.com
+- .com
 - **GitHub:** [Chetanya Mishra](https://github.com/chetanyed)
 - **Linkdln** www.linkedin.com/in/chetanyamishra
 
