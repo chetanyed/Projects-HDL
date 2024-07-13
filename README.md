@@ -68,7 +68,6 @@ If you have any questions or suggestions, feel free to reach out to me.
 
 - **Name:** Chetanya Mishra
 - **Email:** chetanyamishraa@gmail.com
-- .com
 - **GitHub:** [Chetanya Mishra](https://github.com/chetanyed)
 - **Linkdln** www.linkedin.com/in/chetanyamishra
 
