@@ -6,6 +6,7 @@ module slave (
 // input logic pclk,prst,penable,psel,pwrite \\for APB wrapper test
 // input logic [31:0] paddr,pwdata
 // output logic pready,pslverr
+   // output [31:0] prdata
 );
 
   reg [31:0] mem [0:127]='{default:0};
