@@ -15,7 +15,7 @@ def extract_slverr_addresses(log_file):
            if 'slverr:1' in line:
                 match = addr_pattern.search(line)
                 if match:
-                    slverr_addresses.append(match.group(0))
+                    slverr_addresses.append(match.group(1))
 
     return slverr_addresses
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     if addresses:
         print("Addresses where SLVERR was asserted:")
-        count
+        count=0
         for addr in addresses:
             print(addr)
             count=count+1
