@@ -26,8 +26,11 @@ if __name__ == "__main__":
 
     if addresses:
         print("Addresses where SLVERR was asserted:")
+        count
         for addr in addresses:
             print(addr)
+            count=count+1
+        print("total wrong addresses:",count)
     else:
         print("No SLVERR assertions found in the log.")
 
