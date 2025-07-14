@@ -3,6 +3,9 @@
 `include "interface.svh"
 module slave (
    apb_if vif
+// input logic pclk,prst,penable,psel,pwrite \\for APB wrapper test
+// input logic [31:0] paddr,pwdata
+// output logic pready,pslverr
 );
 
   reg [31:0] mem [0:127]='{default:0};
