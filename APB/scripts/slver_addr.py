@@ -21,7 +21,7 @@ def extract_slverr_addresses(log_file):
 
 
 if __name__ == "__main__":
-    log_path = "APB/log/xrun.log"  # Replace with your actual log filename
+    log_path = "APB/log/logfile.log"  # Replace with your actual log filename
     addresses = extract_slverr_addresses(log_path)
 
     if addresses:
