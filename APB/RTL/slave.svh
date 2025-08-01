@@ -20,21 +20,21 @@ module slave (
     
     else if(vif.psel && vif.penable)begin
       if(vif.paddr<32'h0000003f)begin
-      vif.pready<=1'b1;
-      if(vif.pwrite)
-        mem[vif.paddr]<=vif.pwdata;
-      else
-       vif.prdata<=mem[vif.paddr];
-      end
+          vif.pready<=1'b1;
+          if(vif.pwrite)
+             mem[vif.paddr]<=vif.pwdata;
+         else
+             vif.prdata<=mem[vif.paddr];
+                                end
       else begin
         vif.pslverr<=1'b1;
         vif.pready<=1'b1;
-      end
-      end
+            end
+                                       end
     
     else begin
       vif.pready<=1'b0;
       vif.pslverr<=1'b0;
-    end
-    end
+         end
+                                                     end    
 endmodule
