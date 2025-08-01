@@ -7,14 +7,14 @@ class transaction extends uvm_sequence_item;
 
   rand opr_mode op;
 logic psel,penable;
-logic         Pwrite;
+logic         Pwrite;          // signals used by driver with the help of virtual interface
 rand logic [31:0] Paddr;
 rand logic [31:0] Pwdata;
 
 // output signals for monitor
 
 logic pready;
-logic pslverr;
+logic pslverr;               // signals used by monitor with the help of virtual interface
 logic [31:0] Prdata;
 
 `uvm_object_utils_begin(transaction)
@@ -31,7 +31,7 @@ constraint correct_data {Paddr<=127;}
 
   constraint error_data  {Paddr>127; op!=rst;}
   
-  constraint error_insertion {Paddr dist { ['h0:32'h0000007f]:/5,[32'h00000080:32'hffffffff]:/1};  op dist {[0:1]:/1, 3:=0};  }
+  constraint error_insertion {Paddr dist { ['h0:32'h0000007f]:/5,[32'h00000080:32'hffffffff]:/1};  op dist {[0:1]:/1, 3:=0};  } // 16.7% error rate testing *should write script to adjust the error rate 
 
 
 
@@ -59,9 +59,9 @@ repeat(15) begin
 req=transaction::type_id::create("req");
 req.correct_data.constraint_mode(1);
 req.error_data.constraint_mode(0);
-
+req.error_insertion.constraint_mode(0);  
 start_item(req);
-assert (req.randomize);
+assert (req.randomize) ;
 req.op=write;
 finish_item(req);
 end
@@ -84,9 +84,9 @@ repeat(15) begin
 req=transaction::type_id::create("req");
 req.correct_data.constraint_mode(1);
 req.error_data.constraint_mode(0);
+req.error_insertion.constraint_mode(0); 
 start_item(req);
-  assert (req.randomize);
-
+assert (req.randomize);
 req.op=read;
 finish_item(req);
 end
@@ -221,4 +221,5 @@ finish_item(req);
 end
 endtask
 endclass
+
 
