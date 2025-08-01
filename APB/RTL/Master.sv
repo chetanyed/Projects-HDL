@@ -52,7 +52,7 @@ end
 
 SETUP:begin
     penable=0;
-    if(trns && !pslverr) begin
+    if(trns) begin
     pwrite=w_r;
     psel=1'b1;
     paddr=apb_addr;
@@ -66,7 +66,7 @@ end
 ACCESS:begin
   if(trns) begin 
     penable=1'b1;
-    if(pready )begin
+      if(pready && !pslverr)begin
       if(!pwrite)begin
         apb_read_data_out=prdata;
         new_state=SETUP;
