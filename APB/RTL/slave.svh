@@ -19,7 +19,7 @@ module slave (
     end
     
     else if(vif.psel && vif.penable)begin
-      if(vif.paddr<32'h0000003f)begin
+       if(vif.paddr<32'h00000080)begin
           vif.pready<=1'b1;
           if(vif.pwrite)
              mem[vif.paddr]<=vif.pwdata;
