@@ -33,6 +33,19 @@ This repository includes a collection of Verilog HDL projects that I have worked
 3. **SHA-256**
    - Description: An implementation of the SHA-256 cryptographic hash function, which is widely used in security applications.
    - Features: Supports 256-bit hash computation, message padding, and processing.
+
+4. **APB (Advanced Peripheral Bus) Interface**
+
+**Description**:  
+A fully compliant implementation of the APB protocol for peripheral communication in AMBA-based SoCs.
+
+**Features**:
+- Supports APB3 and APB4 specifications.
+- Simple interface with read/write operations.
+- Handshake mechanism using `PREADY`, `PENABLE`, and `PSLVERR` signals.
+- Address decoding and peripheral select logic (`PSEL`).
+- Compatible with both synchronous and bridge-based designs.
+
   
 ## Getting Started
 
