@@ -183,8 +183,8 @@ module asynchronous_fifo #(parameter DEPTH=8, DATA_WIDTH=8,PTR_WIDTH=3) (
   wire [PTR_WIDTH:0] g_wptr, g_rptr;
   
 
-  tfsync #(PTR_WIDTH) sync_wptr (g_wptr,wclk,wrst_n, g_wptr_sync); //write pointer to read clock domain
-  tfsync #(PTR_WIDTH) sync_rptr (g_rptr,rclk,rrst_n, g_rptr_sync); //read pointer to write clock domain 
+      tfsync #(PTR_WIDTH) sync_wptr (g_rptr,wclk,wrst_n, g_rptr_sync); //read pointer to read clock domain
+      tfsync #(PTR_WIDTH) sync_rptr (g_wptr,rclk,rrst_n, g_wptr_sync); //write pointer to write clock domain 
   
   wptr_handler #(PTR_WIDTH) wptr_h(wclk, wrst_n, w_en,g_rptr_sync,b_wptr,g_wptr,full);
   rptr_handler #(PTR_WIDTH) rptr_h(rclk, rrst_n, r_en,g_wptr_sync,b_rptr,g_rptr,empty);
